@@ -5,25 +5,24 @@ public class Camel {
     private static Task[] tasks = new Task[100];
 
     private static String[] decodeDeadlineInput(String input) {
-        int slashIndex = input.indexOf('/');
-        String description = input.substring(0, slashIndex);
-        String dueDate = input.substring(slashIndex + 1);
+        int dueIndex = input.indexOf("/by");
+        //TODO: exception handling when "/by" is not detected
+        String description = input.substring(0, dueIndex - 1);
+        String dueDate = input.substring(dueIndex + 4);
         return new String[]{description, dueDate};
     }
 
     private static String[] decodeEventInput(String input) {
-        int firstSlashIndex = input.indexOf('/');
-        int secondSlashIndex = input.indexOf('/', firstSlashIndex + 1);
-        String description = input.substring(0, firstSlashIndex);
-        String fromDate = input.substring(firstSlashIndex + 1, secondSlashIndex);
-        String toDate = input.substring(secondSlashIndex + 1);
+        int fromIndex = input.indexOf("/from");
+        int toIndex = input.indexOf("/to", fromIndex + 1);
+        //TODO: exception handling when "/by" or "/to" is not detected
+        String description = input.substring(0, fromIndex - 1);
+        String fromDate = input.substring(fromIndex + 6, toIndex - 1);
+        String toDate = input.substring(toIndex + 4);
         return new String[]{description, fromDate, toDate};
     }
 
     private static void addTask(String taskType, String input) {
-        System.out.println("    ____________________________________________________________");
-        System.out.println("    Camel has added: " + input + " :)");
-        System.out.println("    ____________________________________________________________");
         Task newTask;
         
         switch (taskType) {
@@ -44,7 +43,13 @@ public class Camel {
         default:
             break;
         }
+
+        System.out.println("    ____________________________________________________________");
+        System.out.println("    Camel has added this task :)");
+        System.out.println("    " + tasks[numberOfTasks]);
         numberOfTasks++;
+        System.out.println("    You now have " + numberOfTasks + " task(s).");
+        System.out.println("    ____________________________________________________________");
     }
 
     private static void printList() {
@@ -52,8 +57,7 @@ public class Camel {
         System.out.println("    Of course! Camel shall gladly retrieve your tasks :)");
         for (int i = 0; i < numberOfTasks; i++) {
             Task currentTask = tasks[i];
-            System.out.printf("    %d.", i + 1);
-            currentTask.printTask();
+            System.out.printf("    %d.%s%n", i + 1, currentTask);
         }
         System.out.println("    ____________________________________________________________");
     }
@@ -65,8 +69,7 @@ public class Camel {
             currentTask.setDone();
             System.out.println("    ____________________________________________________________");
             System.out.println("    Nice! Camel has marked this task as done :)");
-            System.out.print("    ");
-            currentTask.printTask();
+            System.out.println("    " + currentTask);
             System.out.println("    ____________________________________________________________");
         }
     }
@@ -78,8 +81,7 @@ public class Camel {
             currentTask.setNotDone();
             System.out.println("    ____________________________________________________________");
             System.out.println("    Ok, Camel has marked this task as not done yet :)");
-            System.out.print("    ");
-            currentTask.printTask();
+            System.out.println("    " + currentTask);
             System.out.println("    ____________________________________________________________");
         }
     }

@@ -19,11 +19,12 @@ public class Task {
         isDone = false;
     }
 
-    public void printTask() {
+    @Override
+    public String toString() {
         if (isDone()) {
-            System.out.println("[X] " + description);
+            return "[X] " + description;
         } else {
-            System.out.println("[ ] " + description);
+            return "[ ] " + description;
         }
     }
 }

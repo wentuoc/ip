@@ -13,4 +13,9 @@ public class Deadline extends Task {
     public void setDoneBy(String doneBy) {
         this.doneBy = doneBy;
     }
+
+    @Override
+    public String toString() {
+        return "[D]" + super.toString() + " (by: " + doneBy + ")";
+    }
 }
