@@ -4,12 +4,46 @@ public class Camel {
     private static int numberOfTasks = 0;
     private static Task[] tasks = new Task[100];
 
-    private static void addTask(String input) {
+    private static String[] decodeDeadlineInput(String input) {
+        int slashIndex = input.indexOf('/');
+        String description = input.substring(0, slashIndex);
+        String dueDate = input.substring(slashIndex + 1);
+        return new String[]{description, dueDate};
+    }
+
+    private static String[] decodeEventInput(String input) {
+        int firstSlashIndex = input.indexOf('/');
+        int secondSlashIndex = input.indexOf('/', firstSlashIndex + 1);
+        String description = input.substring(0, firstSlashIndex);
+        String fromDate = input.substring(firstSlashIndex + 1, secondSlashIndex);
+        String toDate = input.substring(secondSlashIndex + 1);
+        return new String[]{description, fromDate, toDate};
+    }
+
+    private static void addTask(String taskType, String input) {
         System.out.println("    ____________________________________________________________");
         System.out.println("    Camel has added: " + input + " :)");
         System.out.println("    ____________________________________________________________");
-        Task newTask = new Task(input);
-        tasks[numberOfTasks] = newTask;
+        Task newTask;
+        
+        switch (taskType) {
+        case "todo":
+            newTask = new Todo(input);
+            tasks[numberOfTasks] = newTask;
+            break;
+        case "deadline":
+            String[] deadlineInputs = decodeDeadlineInput(input);
+            newTask = new Deadline(deadlineInputs[0], deadlineInputs[1]);
+            tasks[numberOfTasks] = newTask;
+            break;
+        case "event":
+            String[] eventInputs = decodeEventInput(input);
+            newTask = new Event(eventInputs[0], eventInputs[1], eventInputs[2]);
+            tasks[numberOfTasks] = newTask;
+            break;
+        default:
+            break;
+        }
         numberOfTasks++;
     }
 
@@ -56,6 +90,35 @@ public class Camel {
         System.out.println("    ____________________________________________________________");
     }
 
+    private static boolean parseInput(String input) {
+        String[] words = input.split(" ");
+        switch (words[0]) {
+        case "todo":
+        case "deadline":
+        case "event":
+            int firstSpaceIndex = input.indexOf(' ');
+            String item = input.substring(firstSpaceIndex+1);
+            addTask(words[0], item);
+            break;
+        case "list":
+            printList();
+            break;
+        case "mark":
+            markTask(words[1]);
+            break;
+        case "unmark":
+            unmarkTask(words[1]);
+            break;
+        case "bye":
+            exitLoop();
+            return true;
+        default:
+            //TODO: Exception handling for unrecognised commands
+            break;
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         String input;
@@ -68,25 +131,7 @@ public class Camel {
 
         while (!hasEnded) {
             input = in.nextLine();
-            String[] words = input.split(" ");
-            switch (words[0]) {
-            case "list":
-                printList();
-                break;
-            case "mark":
-                markTask(words[1]);
-                break;
-            case "unmark":
-                unmarkTask(words[1]);
-                break;
-            case "bye":
-                exitLoop();
-                hasEnded = true;
-                break;
-            default:
-                addTask(input);
-                break;
-            }
+            hasEnded = parseInput(input);
         }
     }
 }
