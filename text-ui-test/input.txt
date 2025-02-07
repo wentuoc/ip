@@ -1,0 +1,12 @@
+todo test1
+list
+deadline test2 /by today
+list
+event test3 /from 2 /to 3
+list
+mark 2
+list
+mark 3
+unmark 2
+list
+bye

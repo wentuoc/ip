@@ -50,7 +50,7 @@ public class Camel {
         System.out.println(LINE_BREAK);
         System.out.println("    Camel has added this task :)");
         System.out.println("    " + tasks[numberOfTasks]);
-        System.out.println("    You now have " + numberOfTasks+1 + " task(s).");
+        System.out.println("    You now have " + (numberOfTasks + 1) + " task(s).");
         System.out.println(LINE_BREAK);
 
         numberOfTasks++;
