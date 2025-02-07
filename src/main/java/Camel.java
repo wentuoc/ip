@@ -1,8 +1,11 @@
 import java.util.Scanner;
 
 public class Camel {
+    private static final String LINE_BREAK = "    ____________________________________________________________";
+    private static final int TASK_SIZE = 100;
+
     private static int numberOfTasks = 0;
-    private static Task[] tasks = new Task[100];
+    private static Task[] tasks = new Task[TASK_SIZE];
 
     private static String[] decodeDeadlineInput(String input) {
         int dueIndex = input.indexOf("/by");
@@ -24,7 +27,7 @@ public class Camel {
 
     private static void addTask(String taskType, String input) {
         Task newTask;
-        
+
         switch (taskType) {
         case "todo":
             newTask = new Todo(input);
@@ -44,22 +47,23 @@ public class Camel {
             break;
         }
 
-        System.out.println("    ____________________________________________________________");
+        System.out.println(LINE_BREAK);
         System.out.println("    Camel has added this task :)");
         System.out.println("    " + tasks[numberOfTasks]);
+        System.out.println("    You now have " + numberOfTasks+1 + " task(s).");
+        System.out.println(LINE_BREAK);
+
         numberOfTasks++;
-        System.out.println("    You now have " + numberOfTasks + " task(s).");
-        System.out.println("    ____________________________________________________________");
     }
 
     private static void printList() {
-        System.out.println("    ____________________________________________________________");
+        System.out.println(LINE_BREAK);
         System.out.println("    Of course! Camel shall gladly retrieve your tasks :)");
         for (int i = 0; i < numberOfTasks; i++) {
             Task currentTask = tasks[i];
             System.out.printf("    %d.%s%n", i + 1, currentTask);
         }
-        System.out.println("    ____________________________________________________________");
+        System.out.println(LINE_BREAK);
     }
 
     private static void markTask(String input) {
@@ -67,10 +71,10 @@ public class Camel {
         if (index >= 1 && index <= numberOfTasks) {
             Task currentTask = tasks[index-1];
             currentTask.setDone();
-            System.out.println("    ____________________________________________________________");
+            System.out.println(LINE_BREAK);
             System.out.println("    Nice! Camel has marked this task as done :)");
             System.out.println("    " + currentTask);
-            System.out.println("    ____________________________________________________________");
+            System.out.println(LINE_BREAK);
         }
     }
 
@@ -79,17 +83,17 @@ public class Camel {
         if (index >= 1 && index <= numberOfTasks) {
             Task currentTask = tasks[index-1];
             currentTask.setNotDone();
-            System.out.println("    ____________________________________________________________");
+            System.out.println(LINE_BREAK);
             System.out.println("    Ok, Camel has marked this task as not done yet :)");
             System.out.println("    " + currentTask);
-            System.out.println("    ____________________________________________________________");
+            System.out.println(LINE_BREAK);
         }
     }
 
-    private static void exitLoop() {
-        System.out.println("    ____________________________________________________________");
+    private static void printExitLoop() {
+        System.out.println(LINE_BREAK);
         System.out.println("    Camel says bye! Hope to see you again soon!");
-        System.out.println("    ____________________________________________________________");
+        System.out.println(LINE_BREAK);
     }
 
     private static boolean parseInput(String input) {
@@ -112,7 +116,7 @@ public class Camel {
             unmarkTask(words[1]);
             break;
         case "bye":
-            exitLoop();
+            printExitLoop();
             return true;
         default:
             //TODO: Exception handling for unrecognised commands
@@ -126,10 +130,10 @@ public class Camel {
         String input;
         boolean hasEnded = false;
 
-        System.out.println("    ____________________________________________________________");
+        System.out.println(LINE_BREAK);
         System.out.println("    Hello! I'm Camel");
         System.out.println("    What can I do for you?");
-        System.out.println("    ____________________________________________________________");
+        System.out.println(LINE_BREAK);
 
         while (!hasEnded) {
             input = in.nextLine();
