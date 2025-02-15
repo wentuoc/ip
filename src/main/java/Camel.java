@@ -69,7 +69,7 @@ public class Camel {
     private static void markTask(String input) {
         int index = Integer.parseInt(input);
         if (index >= 1 && index <= numberOfTasks) {
-            Task currentTask = tasks[index-1];
+            Task currentTask = tasks[index - 1];
             currentTask.setDone();
             System.out.println(LINE_BREAK);
             System.out.println("    Nice! Camel has marked this task as done :)");
@@ -81,7 +81,7 @@ public class Camel {
     private static void unmarkTask(String input) {
         int index = Integer.parseInt(input);
         if (index >= 1 && index <= numberOfTasks) {
-            Task currentTask = tasks[index-1];
+            Task currentTask = tasks[index - 1];
             currentTask.setNotDone();
             System.out.println(LINE_BREAK);
             System.out.println("    Ok, Camel has marked this task as not done yet :)");
@@ -96,6 +96,12 @@ public class Camel {
         System.out.println(LINE_BREAK);
     }
 
+    private static void printUnknownCommand() {
+        System.out.println(LINE_BREAK);
+        System.out.println("    Camel doesn't understand what you are saying :(");
+        System.out.println(LINE_BREAK);
+    }
+
     private static boolean parseInput(String input) {
         String[] words = input.split(" ");
         switch (words[0]) {
@@ -103,8 +109,14 @@ public class Camel {
         case "deadline":
         case "event":
             int firstSpaceIndex = input.indexOf(' ');
-            String item = input.substring(firstSpaceIndex+1);
-            addTask(words[0], item);
+            if (firstSpaceIndex == -1) {
+                System.out.println(LINE_BREAK);
+                System.out.println("    What task would you like to do?");
+                System.out.println(LINE_BREAK);
+            } else {
+                String item = input.substring(firstSpaceIndex + 1);
+                addTask(words[0], item);
+            }
             break;
         case "list":
             printList();
@@ -119,7 +131,7 @@ public class Camel {
             printExitLoop();
             return true;
         default:
-            //TODO: Exception handling for unrecognised commands
+            printUnknownCommand();
             break;
         }
         return false;
