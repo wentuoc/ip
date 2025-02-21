@@ -9,7 +9,7 @@ public class Camel {
 
     private static String[] decodeDeadlineInput(String input) {
         int dueIndex = input.indexOf("/by");
-        //TODO: exception handling when "/by" is not detected
+
         String description = input.substring(0, dueIndex - 1);
         String dueDate = input.substring(dueIndex + 4);
         return new String[]{description, dueDate};
@@ -18,14 +18,14 @@ public class Camel {
     private static String[] decodeEventInput(String input) {
         int fromIndex = input.indexOf("/from");
         int toIndex = input.indexOf("/to", fromIndex + 1);
-        //TODO: exception handling when "/by" or "/to" is not detected
+
         String description = input.substring(0, fromIndex - 1);
         String fromDate = input.substring(fromIndex + 6, toIndex - 1);
         String toDate = input.substring(toIndex + 4);
         return new String[]{description, fromDate, toDate};
     }
 
-    private static void addTask(String taskType, String input) {
+    private static void addTask(String taskType, String input) throws CamelException {
         Task newTask;
 
         switch (taskType) {
@@ -34,15 +34,29 @@ public class Camel {
             tasks[numberOfTasks] = newTask;
             break;
         case "deadline":
-            String[] deadlineInputs = decodeDeadlineInput(input);
-            newTask = new Deadline(deadlineInputs[0], deadlineInputs[1]);
-            tasks[numberOfTasks] = newTask;
-            break;
+            try {
+                String[] deadlineInputs = decodeDeadlineInput(input);
+                newTask = new Deadline(deadlineInputs[0], deadlineInputs[1]);
+                tasks[numberOfTasks] = newTask;
+                break;
+            } catch (StringIndexOutOfBoundsException e) {
+                throw new CamelException(LINE_BREAK +
+                        "\n\tI don't understand :( Please ensure the format is as follows: \"deadline <name> " +
+                        "/by <time>\"\n" +
+                        LINE_BREAK);
+            }
         case "event":
-            String[] eventInputs = decodeEventInput(input);
-            newTask = new Event(eventInputs[0], eventInputs[1], eventInputs[2]);
-            tasks[numberOfTasks] = newTask;
-            break;
+            try {
+                String[] eventInputs = decodeEventInput(input);
+                newTask = new Event(eventInputs[0], eventInputs[1], eventInputs[2]);
+                tasks[numberOfTasks] = newTask;
+                break;
+            } catch (StringIndexOutOfBoundsException e) {
+                throw new CamelException(LINE_BREAK +
+                        "\n\tI don't understand :( Please ensure the format is as follows: \"event <name> /from " +
+                        "<time> /to <time>\"\n" +
+                        LINE_BREAK);
+            }
         default:
             break;
         }
@@ -96,27 +110,15 @@ public class Camel {
         System.out.println(LINE_BREAK);
     }
 
-    private static void printUnknownCommand() {
-        System.out.println(LINE_BREAK);
-        System.out.println("    Camel doesn't understand what you are saying :(");
-        System.out.println(LINE_BREAK);
-    }
-
-    private static boolean parseInput(String input) {
+    private static boolean parseInput(String input) throws CamelException {
         String[] words = input.split(" ");
         switch (words[0]) {
         case "todo":
         case "deadline":
         case "event":
             int firstSpaceIndex = input.indexOf(' ');
-            if (firstSpaceIndex == -1) {
-                System.out.println(LINE_BREAK);
-                System.out.println("    What task would you like to do?");
-                System.out.println(LINE_BREAK);
-            } else {
-                String item = input.substring(firstSpaceIndex + 1);
-                addTask(words[0], item);
-            }
+            String item = input.substring(firstSpaceIndex + 1);
+            addTask(words[0], item);
             break;
         case "list":
             printList();
@@ -131,8 +133,10 @@ public class Camel {
             printExitLoop();
             return true;
         default:
-            printUnknownCommand();
-            break;
+            throw new CamelException(LINE_BREAK +
+                    "\n\tI don't understand your command :( Please choose from this list only: {todo, deadline, " +
+                    "event, list, mark, unmark, bye}\n" +
+                    LINE_BREAK);
         }
         return false;
     }
@@ -149,7 +153,11 @@ public class Camel {
 
         while (!hasEnded) {
             input = in.nextLine();
-            hasEnded = parseInput(input);
+            try {
+                hasEnded = parseInput(input);
+            } catch (CamelException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 }
