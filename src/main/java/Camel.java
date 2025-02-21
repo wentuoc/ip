@@ -40,10 +40,8 @@ public class Camel {
                 tasks[numberOfTasks] = newTask;
                 break;
             } catch (StringIndexOutOfBoundsException e) {
-                throw new CamelException(LINE_BREAK +
-                        "\n\tI don't understand :( Please ensure the format is as follows: \"deadline <name> " +
-                        "/by <time>\"\n" +
-                        LINE_BREAK);
+                throw new CamelException("I don't understand :( Please ensure the format is as follows: \"deadline " +
+                        "<name> /by <time>\"");
             }
         case "event":
             try {
@@ -52,10 +50,8 @@ public class Camel {
                 tasks[numberOfTasks] = newTask;
                 break;
             } catch (StringIndexOutOfBoundsException e) {
-                throw new CamelException(LINE_BREAK +
-                        "\n\tI don't understand :( Please ensure the format is as follows: \"event <name> /from " +
-                        "<time> /to <time>\"\n" +
-                        LINE_BREAK);
+                throw new CamelException("I don't understand :( Please ensure the format is as follows: \"event " +
+                        "<name> /from <time> /to <time>\"");
             }
         default:
             break;
@@ -70,37 +66,65 @@ public class Camel {
         numberOfTasks++;
     }
 
-    private static void printList() {
-        System.out.println(LINE_BREAK);
-        System.out.println("    Of course! Camel shall gladly retrieve your tasks :)");
-        for (int i = 0; i < numberOfTasks; i++) {
-            Task currentTask = tasks[i];
-            System.out.printf("    %d.%s%n", i + 1, currentTask);
-        }
-        System.out.println(LINE_BREAK);
-    }
-
-    private static void markTask(String input) {
-        int index = Integer.parseInt(input);
-        if (index >= 1 && index <= numberOfTasks) {
-            Task currentTask = tasks[index - 1];
-            currentTask.setDone();
+    private static void printList() throws CamelException {
+        if (numberOfTasks == 0) {
+            throw new CamelException("Task list is currently empty. Add a new task to start slaying your goals :)");
+        } else {
             System.out.println(LINE_BREAK);
-            System.out.println("    Nice! Camel has marked this task as done :)");
-            System.out.println("    " + currentTask);
+            System.out.println("    Of course! Camel shall gladly retrieve your tasks :)");
+            for (int i = 0; i < numberOfTasks; i++) {
+                Task currentTask = tasks[i];
+                System.out.printf("    %d.%s%n", i + 1, currentTask);
+            }
             System.out.println(LINE_BREAK);
         }
     }
 
-    private static void unmarkTask(String input) {
+    private static void markTask(String input) throws CamelException {
         int index = Integer.parseInt(input);
         if (index >= 1 && index <= numberOfTasks) {
             Task currentTask = tasks[index - 1];
-            currentTask.setNotDone();
-            System.out.println(LINE_BREAK);
-            System.out.println("    Ok, Camel has marked this task as not done yet :)");
-            System.out.println("    " + currentTask);
-            System.out.println(LINE_BREAK);
+
+            if (currentTask.isDone()) {
+                throw new CamelException("You have already completed this task. Yay! :)");
+            } else {
+                currentTask.setDone();
+                System.out.println(LINE_BREAK);
+                System.out.println("    Nice! Camel has marked this task as done :)");
+                System.out.println("    " + currentTask);
+                System.out.println(LINE_BREAK);
+            }
+        }
+        else if (numberOfTasks == 0) {
+            throw new CamelException("Task list is currently empty. Add a new task to start slaying your goals :)");
+        }
+        else {
+            throw new CamelException(String.format("Task index is out of range :( Please select within 1 and %d only",
+                    numberOfTasks));
+        }
+    }
+
+    private static void unmarkTask(String input) throws CamelException {
+        int index = Integer.parseInt(input);
+        if (index >= 1 && index <= numberOfTasks) {
+            Task currentTask = tasks[index - 1];
+
+            if (!currentTask.isDone()) {
+                throw new CamelException("You have already not completed this task :(");
+            } else {
+                currentTask.setNotDone();
+                System.out.println(LINE_BREAK);
+                System.out.println("    Ok, Camel has marked this task as not done yet :)");
+                System.out.println("    " + currentTask);
+                System.out.println(LINE_BREAK);
+            }
+        }
+        else if (numberOfTasks == 0) {
+            throw new CamelException("Task list is currently empty. Add a new task to start slaying your goals :)");
+        }
+        else {
+            throw new CamelException(String.format("Task index is out of range :( Please select within 1 and %d " +
+                            "only", numberOfTasks));
         }
     }
 
@@ -114,7 +138,15 @@ public class Camel {
         String[] words = input.split(" ");
         switch (words[0]) {
         case "todo":
+            try {
+                addTask(words[0], words[1]);
+                break;
+            } catch (ArrayIndexOutOfBoundsException e) {
+                throw new CamelException("I don't understand :( Please ensure the format is as follows: \"todo " +
+                        "<name>\"");
+            }
         case "deadline":
+            //fallthrough
         case "event":
             int firstSpaceIndex = input.indexOf(' ');
             String item = input.substring(firstSpaceIndex + 1);
@@ -124,19 +156,27 @@ public class Camel {
             printList();
             break;
         case "mark":
-            markTask(words[1]);
+            try {
+                markTask(words[1]);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                throw new CamelException("I don't understand :( Please ensure the format is as follows: \"mark " +
+                        "<task index>\"");
+            }
             break;
         case "unmark":
-            unmarkTask(words[1]);
+            try {
+                unmarkTask(words[1]);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                throw new CamelException("I don't understand :( Please ensure the format is as follows: \"unmark " +
+                        "<name>\"");
+            }
             break;
         case "bye":
             printExitLoop();
             return true;
         default:
-            throw new CamelException(LINE_BREAK +
-                    "\n\tI don't understand your command :( Please choose from this list only: {todo, deadline, " +
-                    "event, list, mark, unmark, bye}\n" +
-                    LINE_BREAK);
+            throw new CamelException("I don't understand your command :( Please choose from this list only: {todo, deadline, " +
+                    "event, list, mark, unmark, bye}");
         }
         return false;
     }
