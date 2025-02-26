@@ -16,8 +16,8 @@ public class NormalMessages {
     }
 
     public static void printHelp() {
-        System.out.println(LINE_BREAK + "\n\tAvailable commands: {todo, deadline, event, list, mark, unmark, bye}\n"
-                + LINE_BREAK);
+        System.out.println(LINE_BREAK + "\n\tAvailable commands: {todo, deadline, event, list, mark, unmark, bye, " +
+                "help}\n" + LINE_BREAK);
     }
 
     public static void printAddedTask(Task currentTask, int numberOfTasks) {

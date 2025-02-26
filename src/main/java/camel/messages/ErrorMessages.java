@@ -28,5 +28,5 @@ public class ErrorMessages {
     public static final String TASK_NOT_COMPLETED = "You have already not completed this task :(";
 
     public static final String UNKNOWN_COMMAND = "I don't understand your command :( Please choose from this list " +
-            "only: {todo, deadline, event, list, mark, unmark, bye}";
+            "only: {todo, deadline, event, list, mark, unmark, bye, help}";
 }
