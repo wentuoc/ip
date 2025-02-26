@@ -12,12 +12,10 @@ public class Camel {
         String[] words = input.split(" ");
         switch (words[0]) {
         case "todo":
-            try {
-                Commands.addTask(words[0], words[1]);
-                break;
-            } catch (ArrayIndexOutOfBoundsException e) {
+            if (!input.contains(" ")) {
                 throw new CamelException(ErrorMessages.TODO_FORMAT);
             }
+            //fallthrough
         case "deadline":
             //fallthrough
         case "event":
