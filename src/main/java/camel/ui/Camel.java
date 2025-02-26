@@ -3,6 +3,7 @@ package camel.ui;
 import java.util.Scanner;
 
 import camel.exception.*;
+import camel.file.FileHandling;
 import camel.messages.*;
 import camel.commands.*;
 
@@ -54,6 +55,7 @@ public class Camel {
     }
 
     public static void main(String[] args) {
+        FileHandling.openFile();
         Scanner in = new Scanner(System.in);
         String input;
         boolean hasEnded = false;
@@ -68,5 +70,6 @@ public class Camel {
                 System.out.println(e.getMessage());
             }
         }
+        FileHandling.saveFile();
     }
 }

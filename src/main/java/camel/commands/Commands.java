@@ -1,5 +1,7 @@
 package camel.commands;
 
+import java.util.ArrayList;
+
 import camel.exception.CamelException;
 import camel.messages.*;
 import camel.task.*;
@@ -28,19 +30,30 @@ public class Commands {
         return new String[]{description, fromDate, toDate};
     }
 
-    public static void addTask(String taskType, String input) throws CamelException {
-        Task newTask;
+    public static void addTodo(String description, boolean isDone) {
+        tasks[numberOfTasks] = new Todo(description, isDone);
+        numberOfTasks++;
+    }
 
+    public static void addDeadline(String description, boolean isDone, String doneBy) {
+        tasks[numberOfTasks] = new Deadline(description, isDone, doneBy);
+        numberOfTasks++;
+    }
+
+    public static void addEvent(String description, boolean isDone, String startTime, String endTime) {
+        tasks[numberOfTasks] = new Event(description, isDone, startTime, endTime);
+        numberOfTasks++;
+    }
+
+    public static void addTask(String taskType, String input) throws CamelException {
         switch (taskType) {
         case "todo":
-            newTask = new Todo(input);
-            tasks[numberOfTasks] = newTask;
+            addTodo(input, false);
             break;
         case "deadline":
             try {
                 String[] deadlineInputs = decodeDeadlineInput(input);
-                newTask = new Deadline(deadlineInputs[0], deadlineInputs[1]);
-                tasks[numberOfTasks] = newTask;
+                addDeadline(deadlineInputs[0], false, deadlineInputs[1]);
                 break;
             } catch (StringIndexOutOfBoundsException e) {
                 throw new CamelException(ErrorMessages.DEADLINE_FORMAT);
@@ -48,8 +61,7 @@ public class Commands {
         case "event":
             try {
                 String[] eventInputs = decodeEventInput(input);
-                newTask = new Event(eventInputs[0], eventInputs[1], eventInputs[2]);
-                tasks[numberOfTasks] = newTask;
+                addEvent(eventInputs[0], false, eventInputs[1], eventInputs[2]);
                 break;
             } catch (StringIndexOutOfBoundsException e) {
                 throw new CamelException(ErrorMessages.EVENT_FORMAT);
@@ -58,8 +70,8 @@ public class Commands {
             break;
         }
 
-        NormalMessages.printAddedTask(tasks[numberOfTasks], numberOfTasks + 1);
-        numberOfTasks++;
+        NormalMessages.printAddedTask(tasks[numberOfTasks - 1], numberOfTasks);
+
     }
 
     public static void printList() throws CamelException {
@@ -108,5 +120,15 @@ public class Commands {
         else {
             throw new CamelException(ErrorMessages.taskIndexOutOfRange(numberOfTasks));
         }
+    }
+
+    public static ArrayList<String> fileFormat() {
+        ArrayList<String> lines = new ArrayList<>();
+
+        for (int i = 0; i < numberOfTasks; i++) {
+            lines.add(tasks[i].toFileFormat());
+        }
+
+        return lines;
     }
 }

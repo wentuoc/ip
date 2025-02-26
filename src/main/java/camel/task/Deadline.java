@@ -8,6 +8,11 @@ public class Deadline extends Task {
         this.doneBy = doneBy;
     }
 
+    public Deadline(String description, boolean isDone, String doneBy) {
+        super(description, isDone);
+        this.doneBy = doneBy;
+    }
+
     public String getDoneBy() {
         return doneBy;
     }
@@ -19,5 +24,10 @@ public class Deadline extends Task {
     @Override
     public String toString() {
         return "[D]" + super.toString() + " (by: " + doneBy + ")";
+    }
+
+    @Override
+    public String toFileFormat() {
+        return "D," + super.toFileFormat() + "," + doneBy;
     }
 }

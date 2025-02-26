@@ -20,8 +20,8 @@ public class ErrorMessages {
         return String.format("Task index is out of range :( Please select within 1 and %d only", numberOfTasks);
     }
 
-    public static final String EMPTY_TASK_LIST = "\"Task list is currently empty. Add a new task to start " +
-            "slaying your goals :)\"";
+    public static final String EMPTY_TASK_LIST = "Task list is currently empty. Add a new task to start " +
+            "slaying your goals :)";
 
     public static final String TASK_ALREADY_COMPLETED = "You have already completed this task. Yay! :)";
 
@@ -29,4 +29,16 @@ public class ErrorMessages {
 
     public static final String UNKNOWN_COMMAND = "I don't understand your command :( Please choose from this list " +
             "only: {todo, deadline, event, list, mark, unmark, bye, help}";
+
+    public static String fileCorrupted(String line) {
+        return "\tThe file is corrupted: " + line;
+    }
+
+    public static String createFileFailed(String line) {
+        return "\tRead file failed: " + line;
+    }
+
+    public static String saveFileFailed(String line) {
+        return "\tSave file failed: " + line;
+    }
 }
