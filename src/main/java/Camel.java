@@ -158,7 +158,7 @@ public class Camel {
         case "mark":
             try {
                 markTask(words[1]);
-            } catch (ArrayIndexOutOfBoundsException e) {
+            } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
                 throw new CamelException("I don't understand :( Please ensure the format is as follows: \"mark " +
                         "<task index>\"");
             }
@@ -166,9 +166,9 @@ public class Camel {
         case "unmark":
             try {
                 unmarkTask(words[1]);
-            } catch (ArrayIndexOutOfBoundsException e) {
+            } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
                 throw new CamelException("I don't understand :( Please ensure the format is as follows: \"unmark " +
-                        "<name>\"");
+                        "<task index>\"");
             }
             break;
         case "bye":
