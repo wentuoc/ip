@@ -1,3 +1,5 @@
+package camel.exception;
+
 public class CamelException extends Exception {
     private static final String LINE_BREAK = "    ____________________________________________________________";
 
