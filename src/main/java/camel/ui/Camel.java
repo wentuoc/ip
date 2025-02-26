@@ -1,4 +1,8 @@
+package camel.ui;
+
 import java.util.Scanner;
+import camel.task.*;
+import camel.exception.*;
 
 public class Camel {
     private static final String LINE_BREAK = "    ____________________________________________________________";
