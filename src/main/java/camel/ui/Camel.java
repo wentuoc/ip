@@ -1,15 +1,15 @@
 package camel.ui;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 import camel.task.*;
 import camel.exception.*;
 
 public class Camel {
     private static final String LINE_BREAK = "    ____________________________________________________________";
-    private static final int TASK_SIZE = 100;
 
     private static int numberOfTasks = 0;
-    private static Task[] tasks = new Task[TASK_SIZE];
+    private static ArrayList<Task> tasks = new ArrayList<>();
 
     private static String[] decodeDeadlineInput(String input) {
         int dueIndex = input.indexOf("/by");
@@ -35,13 +35,13 @@ public class Camel {
         switch (taskType) {
         case "todo":
             newTask = new Todo(input);
-            tasks[numberOfTasks] = newTask;
+            tasks.add(newTask);
             break;
         case "deadline":
             try {
                 String[] deadlineInputs = decodeDeadlineInput(input);
                 newTask = new Deadline(deadlineInputs[0], deadlineInputs[1]);
-                tasks[numberOfTasks] = newTask;
+                tasks.add(newTask);
                 break;
             } catch (StringIndexOutOfBoundsException e) {
                 throw new CamelException("I don't understand :( Please ensure the format is as follows: \"deadline " +
@@ -51,7 +51,7 @@ public class Camel {
             try {
                 String[] eventInputs = decodeEventInput(input);
                 newTask = new Event(eventInputs[0], eventInputs[1], eventInputs[2]);
-                tasks[numberOfTasks] = newTask;
+                tasks.add(newTask);
                 break;
             } catch (StringIndexOutOfBoundsException e) {
                 throw new CamelException("I don't understand :( Please ensure the format is as follows: \"event " +
@@ -63,7 +63,7 @@ public class Camel {
 
         System.out.println(LINE_BREAK);
         System.out.println("    Camel has added this task :)");
-        System.out.println("    " + tasks[numberOfTasks]);
+        System.out.println("    " + tasks.get(numberOfTasks));
         System.out.println("    You now have " + (numberOfTasks + 1) + " task(s).");
         System.out.println(LINE_BREAK);
 
@@ -77,7 +77,7 @@ public class Camel {
             System.out.println(LINE_BREAK);
             System.out.println("    Of course! Camel shall gladly retrieve your tasks :)");
             for (int i = 0; i < numberOfTasks; i++) {
-                Task currentTask = tasks[i];
+                Task currentTask = tasks.get(i);
                 System.out.printf("    %d.%s%n", i + 1, currentTask);
             }
             System.out.println(LINE_BREAK);
@@ -87,7 +87,7 @@ public class Camel {
     private static void markTask(String input) throws CamelException {
         int index = Integer.parseInt(input);
         if (index >= 1 && index <= numberOfTasks) {
-            Task currentTask = tasks[index - 1];
+            Task currentTask = tasks.get(index - 1);
 
             if (currentTask.isDone()) {
                 throw new CamelException("You have already completed this task. Yay! :)");
@@ -111,7 +111,7 @@ public class Camel {
     private static void unmarkTask(String input) throws CamelException {
         int index = Integer.parseInt(input);
         if (index >= 1 && index <= numberOfTasks) {
-            Task currentTask = tasks[index - 1];
+            Task currentTask = tasks.get(index - 1);
 
             if (!currentTask.isDone()) {
                 throw new CamelException("You have already not completed this task :(");
@@ -129,6 +129,25 @@ public class Camel {
         else {
             throw new CamelException(String.format("Task index is out of range :( Please select within 1 and %d " +
                             "only", numberOfTasks));
+        }
+    }
+
+    private static void deleteTask(String input) throws CamelException {
+        int index = Integer.parseInt(input);
+        if (index >= 1 && index <= numberOfTasks) {
+            System.out.println(LINE_BREAK);
+            System.out.println("    Ok, Camel has deleted this task :)");
+            System.out.println("    " + tasks.get(index - 1));
+            System.out.println(LINE_BREAK);
+            tasks.remove(index - 1);
+            numberOfTasks--;
+        }
+        else if (numberOfTasks == 0) {
+            throw new CamelException("Task list is currently empty. Add a new task to start slaying your goals :)");
+        }
+        else {
+            throw new CamelException(String.format("Task index is out of range :( Please select within 1 and %d " +
+                    "only", numberOfTasks));
         }
     }
 
@@ -172,6 +191,14 @@ public class Camel {
                 unmarkTask(words[1]);
             } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
                 throw new CamelException("I don't understand :( Please ensure the format is as follows: \"unmark " +
+                        "<task index>\"");
+            }
+            break;
+        case "delete":
+            try {
+                deleteTask(words[1]);
+            } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+                throw new CamelException("I don't understand :( Please ensure the format is as follows: \"delete " +
                         "<task index>\"");
             }
             break;
