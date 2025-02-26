@@ -1,12 +1,17 @@
 package camel.task;
 
 public class Task {
-    private String description;
+    private final String description;
     private boolean isDone;
 
     public Task(String description) {
         this.description = description;
         isDone = false;
+    }
+
+    public Task(String description, boolean isDone) {
+        this.description = description;
+        this.isDone = isDone;
     }
 
     public boolean isDone() {
@@ -28,5 +33,9 @@ public class Task {
         } else {
             return "[ ] " + description;
         }
+    }
+
+    public String toFileFormat() {
+        return Boolean.toString(isDone) + "," + description;
     }
 }
