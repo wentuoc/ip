@@ -1,61 +1,61 @@
     ____________________________________________________________
-    Hello! I'm Camel
+    Hello! I'm camel.Camel
     What can I do for you?
     ____________________________________________________________
     ____________________________________________________________
-    Camel has added this task :)
+    camel.Camel has added this task :)
     [T][ ] test1
     You now have 1 task(s).
     ____________________________________________________________
     ____________________________________________________________
-    Of course! Camel shall gladly retrieve your tasks :)
+    Of course! camel.Camel shall gladly retrieve your tasks :)
     1.[T][ ] test1
     ____________________________________________________________
     ____________________________________________________________
-    Camel has added this task :)
+    camel.Camel has added this task :)
     [D][ ] test2 (by: today)
     You now have 2 task(s).
     ____________________________________________________________
     ____________________________________________________________
-    Of course! Camel shall gladly retrieve your tasks :)
+    Of course! camel.Camel shall gladly retrieve your tasks :)
     1.[T][ ] test1
     2.[D][ ] test2 (by: today)
     ____________________________________________________________
     ____________________________________________________________
-    Camel has added this task :)
+    camel.Camel has added this task :)
     [E][ ] test3 (from: 2 to: 3)
     You now have 3 task(s).
     ____________________________________________________________
     ____________________________________________________________
-    Of course! Camel shall gladly retrieve your tasks :)
+    Of course! camel.Camel shall gladly retrieve your tasks :)
     1.[T][ ] test1
     2.[D][ ] test2 (by: today)
     3.[E][ ] test3 (from: 2 to: 3)
     ____________________________________________________________
     ____________________________________________________________
-    Nice! Camel has marked this task as done :)
+    Nice! camel.Camel has marked this task as done :)
     [D][X] test2 (by: today)
     ____________________________________________________________
     ____________________________________________________________
-    Of course! Camel shall gladly retrieve your tasks :)
+    Of course! camel.Camel shall gladly retrieve your tasks :)
     1.[T][ ] test1
     2.[D][X] test2 (by: today)
     3.[E][ ] test3 (from: 2 to: 3)
     ____________________________________________________________
     ____________________________________________________________
-    Nice! Camel has marked this task as done :)
+    Nice! camel.Camel has marked this task as done :)
     [E][X] test3 (from: 2 to: 3)
     ____________________________________________________________
     ____________________________________________________________
-    Ok, Camel has marked this task as not done yet :)
+    Ok, camel.Camel has marked this task as not done yet :)
     [D][ ] test2 (by: today)
     ____________________________________________________________
     ____________________________________________________________
-    Of course! Camel shall gladly retrieve your tasks :)
+    Of course! camel.Camel shall gladly retrieve your tasks :)
     1.[T][ ] test1
     2.[D][ ] test2 (by: today)
     3.[E][X] test3 (from: 2 to: 3)
     ____________________________________________________________
     ____________________________________________________________
-    Camel says bye! Hope to see you again soon!
+    camel.Camel says bye! Hope to see you again soon!
     ____________________________________________________________

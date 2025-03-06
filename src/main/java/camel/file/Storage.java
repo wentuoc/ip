@@ -9,11 +9,22 @@ import java.util.List;
 import camel.commands.Commands;
 import camel.exception.CamelException;
 import camel.messages.ErrorMessages;
+import camel.task.TaskList;
 
-public class FileHandling {
+public class Storage {
 
-    public static void openFile() {
-        Path dataPath = Paths.get("data/camel.txt");
+    private final Commands commands;
+    private final String address;
+    private final TaskList tasks;
+
+    public Storage(String address, TaskList tasks) {
+        commands = new Commands(tasks);
+        this.tasks = tasks;
+        this.address = address;
+    }
+
+    public void openFile() {
+        Path dataPath = Paths.get(address);
 
         if (Files.exists(dataPath)) {
             try {
@@ -34,29 +45,29 @@ public class FileHandling {
         }
     }
 
-    private static void addTaskFromFile(String fileLine) throws CamelException {
+    private void addTaskFromFile(String fileLine) throws CamelException {
         String[] parameters = fileLine.split(",");
         boolean isDone = Boolean.parseBoolean(parameters[1]);
 
         switch (parameters[0]) {
         case "T":
-            Commands.addTodo(parameters[2], isDone);
+            commands.addTodo(parameters[2], isDone);
             break;
         case "D":
-            Commands.addDeadline(parameters[2], isDone, parameters[3]);
+            commands.addDeadline(parameters[2], isDone, parameters[3]);
             break;
         case "E":
-            Commands.addEvent(parameters[2], isDone, parameters[3], parameters[4]);
+            commands.addEvent(parameters[2], isDone, parameters[3], parameters[4]);
             break;
         default:
             throw new CamelException(ErrorMessages.fileCorrupted(fileLine));
         }
     }
 
-    public static void saveFile() {
-        Path dataPath = Paths.get("data/camel.txt");
+    public void saveFile() {
+        Path dataPath = Paths.get(address);
         try {
-            Files.write(dataPath, Commands.fileFormat());
+            Files.write(dataPath, tasks.fileFormat());
         } catch (IOException e) {
             System.out.println(ErrorMessages.saveFileFailed(e.getMessage()));
         }
