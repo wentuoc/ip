@@ -29,7 +29,7 @@ public class TaskList {
             throw new CamelException(ErrorMessages.EMPTY_TASK_LIST);
         }
         try {
-            Task currentTask = tasks.get(index - 1);
+            Task currentTask = tasks.get(index);
             if (currentTask.isDone()) {
                 throw new CamelException(ErrorMessages.TASK_ALREADY_COMPLETED);
             } else {
@@ -46,7 +46,7 @@ public class TaskList {
             throw new CamelException(ErrorMessages.EMPTY_TASK_LIST);
         }
         try {
-            Task currentTask = tasks.get(index - 1);
+            Task currentTask = tasks.get(index);
             if (!currentTask.isDone()) {
                 throw new CamelException(ErrorMessages.TASK_NOT_COMPLETED);
             } else {
@@ -63,8 +63,8 @@ public class TaskList {
             throw new CamelException(ErrorMessages.EMPTY_TASK_LIST);
         }
         try {
-            Task currentTask = tasks.get(index - 1);
-            tasks.remove(index - 1);
+            Task currentTask = tasks.get(index);
+            tasks.remove(index);
             return currentTask;
         } catch (IndexOutOfBoundsException e) {
             throw new CamelException(ErrorMessages.taskIndexOutOfRange(tasks.size()));

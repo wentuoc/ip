@@ -5,7 +5,6 @@ import camel.messages.NormalMessages;
 import camel.task.Task;
 import camel.task.TaskList;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Ui {

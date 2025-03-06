@@ -2,8 +2,8 @@ package camel;
 
 
 import camel.exception.*;
-import camel.commands.*;
 import camel.file.Storage;
+import camel.ui.Parser;
 import camel.ui.Ui;
 import camel.task.TaskList;
 
@@ -31,7 +31,7 @@ public class Camel {
             try {
                 hasEnded = parser.parseInput(userInput);
             } catch (CamelException e) {
-                //do something
+                System.out.println(e.getMessage());
             }
         } while (!hasEnded);
     }
