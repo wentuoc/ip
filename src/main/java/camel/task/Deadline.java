@@ -3,11 +3,6 @@ package camel.task;
 public class Deadline extends Task {
     private String doneBy;
 
-    public Deadline(String description, String doneBy) {
-        super(description);
-        this.doneBy = doneBy;
-    }
-
     public Deadline(String description, boolean isDone, String doneBy) {
         super(description, isDone);
         this.doneBy = doneBy;

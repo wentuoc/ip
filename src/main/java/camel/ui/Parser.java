@@ -1,6 +1,6 @@
 package camel.ui;
 
-import camel.commands.Commands;
+import camel.commands.*;
 import camel.exception.CamelException;
 import camel.messages.ErrorMessages;
 import camel.task.Task;
@@ -8,18 +8,9 @@ import camel.task.TaskList;
 
 public class Parser {
 
-    private final Commands commands;
-    private final Ui userInterface;
-    private final TaskList tasks;
     private final int LENGTH_OF_BY = 4;
     private final int LENGTH_OF_TO = 4;
     private final int LENGTH_OF_FROM = 6;
-
-    public Parser(TaskList tasks) {
-        commands = new Commands(tasks);
-        this.tasks = tasks;
-        userInterface = new Ui();
-    }
 
     private String[] decodeDeadlineInput(String input) {
         int dueIndex = input.indexOf("/by");
@@ -39,7 +30,7 @@ public class Parser {
         return new String[]{description, fromDate, toDate};
     }
 
-    public boolean parseInput(String input) throws CamelException {
+    public AbstractCommand parseInput(String input) throws CamelException {
         String cmd = input;
         String item = "";
         String[] params;
@@ -55,65 +46,50 @@ public class Parser {
             if (item.isEmpty()) {
                 throw new CamelException(ErrorMessages.TODO_FORMAT);
             }
-            Task addedTask = commands.addTodo(item,false);
-            userInterface.printAddedTask(addedTask, tasks.getSize());
-            break;
+            return new AddTodoCommand(item, false);
         case "deadline":
             try {
                 params = decodeDeadlineInput(item);
-                Task addedDeadline = commands.addDeadline(params[0], false, params[1]);
-                userInterface.printAddedTask(addedDeadline, tasks.getSize());
-                break;
+                return new AddDeadlineCommand(params[0], false, params[1]);
             } catch (IndexOutOfBoundsException e) {
                 throw new CamelException(ErrorMessages.DEADLINE_FORMAT);
             }
         case "event":
             try {
                 params = decodeEventInput(item);
-                Task addedEvent = commands.addEvent(params[0], false, params[1], params[2]);
-                userInterface.printAddedTask(addedEvent, tasks.getSize());
-                break;
+                return new AddEventCommand(params[0], false, params[1], params[2]);
             } catch (IndexOutOfBoundsException e) {
                 throw new CamelException(ErrorMessages.EVENT_FORMAT);
             }
         case "list":
-            commands.printList();
-            break;
+            return new PrintListCommand();
         case "mark":
             try {
                 int index = Integer.parseInt(item);
-                Task markedTask = commands.mark(index - 1);
-                userInterface.printMarkedAsDone(markedTask);
-                break;
+                return new MarkCommand(index - 1);
             } catch (NumberFormatException e) {
                 throw new CamelException(ErrorMessages.MARK_FORMAT);
             }
         case "unmark":
             try {
                 int index = Integer.parseInt(item);
-                Task unmarkedTask = commands.unmark(index - 1);
-                userInterface.printMarkedAsNotDone(unmarkedTask);
-                break;
+                return new UnmarkCommand(index - 1);
             } catch (NumberFormatException e) {
                 throw new CamelException(ErrorMessages.UNMARK_FORMAT);
             }
         case "delete":
             try {
                 int index = Integer.parseInt(item);
-                Task deletedTask = commands.delete(index - 1);
-                userInterface.printDeletedTask(deletedTask);
-                break;
+                return new DeleteCommand(index - 1);
             } catch (NumberFormatException e) {
                 throw new CamelException(ErrorMessages.DELETE_FORMAT);
             }
         case "help":
-            commands.printHelp();
-            break;
+            return new HelpCommand();
         case "bye":
-            return true;
+            return new ByeCommand();
         default:
             throw new CamelException(ErrorMessages.UNKNOWN_COMMAND);
         }
-        return false;
     }
 }

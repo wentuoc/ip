@@ -50,4 +50,8 @@ public class Ui {
     public void printDeletedTask(Task currentTask) {
         System.out.println(NormalMessages.deletedTask(currentTask));
     }
+
+    public void handleException(Exception e) {
+        System.out.println(e.getMessage());
+    }
 }

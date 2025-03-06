@@ -12,16 +12,22 @@ public class TaskList {
         tasks = new ArrayList<>();
     }
 
-    public void addTodo(String description, boolean isDone) {
-        tasks.add(new Todo(description, isDone));
+    public Task addTodo(String description, boolean isDone) {
+        Todo newTodo = new Todo(description, isDone);
+        tasks.add(newTodo);
+        return newTodo;
     }
 
-    public void addDeadline(String description, boolean isDone, String doneBy) {
-        tasks.add(new Deadline(description, isDone, doneBy));
+    public Task addDeadline(String description, boolean isDone, String doneBy) {
+        Deadline newDeadline = new Deadline(description, isDone, doneBy);
+        tasks.add(newDeadline);
+        return newDeadline;
     }
 
-    public void addEvent(String description, boolean isDone, String startTime, String endTime) {
-        tasks.add(new Event(description, isDone, startTime, endTime));
+    public Task addEvent(String description, boolean isDone, String startTime, String endTime) {
+        Event newEvent = new Event(description, isDone, startTime, endTime);
+        tasks.add(newEvent);
+        return newEvent;
     }
 
     public Task markTask(int index) throws CamelException {

@@ -6,19 +6,17 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-import camel.commands.Commands;
+import camel.commands.AbstractCommand;
 import camel.exception.CamelException;
 import camel.messages.ErrorMessages;
 import camel.task.TaskList;
 
 public class Storage {
 
-    private final Commands commands;
     private final String address;
     private final TaskList tasks;
 
     public Storage(String address, TaskList tasks) {
-        commands = new Commands(tasks);
         this.tasks = tasks;
         this.address = address;
     }
@@ -51,13 +49,13 @@ public class Storage {
 
         switch (parameters[0]) {
         case "T":
-            commands.addTodo(parameters[2], isDone);
+            tasks.addTodo(parameters[2], isDone);
             break;
         case "D":
-            commands.addDeadline(parameters[2], isDone, parameters[3]);
+            tasks.addDeadline(parameters[2], isDone, parameters[3]);
             break;
         case "E":
-            commands.addEvent(parameters[2], isDone, parameters[3], parameters[4]);
+            tasks.addEvent(parameters[2], isDone, parameters[3], parameters[4]);
             break;
         default:
             throw new CamelException(ErrorMessages.fileCorrupted(fileLine));
