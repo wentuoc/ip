@@ -1,19 +1,23 @@
 package camel.task;
 
-public class Deadline extends Task {
-    private String doneBy;
+import camel.exception.CamelException;
 
-    public Deadline(String description, boolean isDone, String doneBy) {
+import java.time.LocalDateTime;
+
+public class Deadline extends Task {
+    private LocalDateTime doneBy;
+
+    public Deadline(String description, boolean isDone, String doneBy) throws CamelException {
         super(description, isDone);
-        this.doneBy = doneBy;
+        this.doneBy = convertDateTime(doneBy);
     }
 
     public String getDoneBy() {
-        return doneBy;
+        return doneBy.toString();
     }
 
-    public void setDoneBy(String doneBy) {
-        this.doneBy = doneBy;
+    public void setDoneBy(String doneBy) throws CamelException {
+        this.doneBy = convertDateTime(doneBy);
     }
 
     @Override

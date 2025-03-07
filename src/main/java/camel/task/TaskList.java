@@ -18,13 +18,13 @@ public class TaskList {
         return newTodo;
     }
 
-    public Task addDeadline(String description, boolean isDone, String doneBy) {
+    public Task addDeadline(String description, boolean isDone, String doneBy) throws CamelException {
         Deadline newDeadline = new Deadline(description, isDone, doneBy);
         tasks.add(newDeadline);
         return newDeadline;
     }
 
-    public Task addEvent(String description, boolean isDone, String startTime, String endTime) {
+    public Task addEvent(String description, boolean isDone, String startTime, String endTime) throws CamelException {
         Event newEvent = new Event(description, isDone, startTime, endTime);
         tasks.add(newEvent);
         return newEvent;

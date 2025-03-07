@@ -1,29 +1,33 @@
 package camel.task;
 
-public class Event extends Task {
-    private String startTime;
-    private String endTime;
+import camel.exception.CamelException;
 
-    public Event(String description, boolean isDone, String startTime, String endTime) {
+import java.time.LocalDateTime;
+
+public class Event extends Task {
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
+
+    public Event(String description, boolean isDone, String startTime, String endTime) throws CamelException {
         super(description, isDone);
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.startTime = convertDateTime(startTime);
+        this.endTime = convertDateTime(endTime);
     }
 
     public String getStartTime() {
-        return startTime;
+        return startTime.toString();
     }
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
+    public void setStartTime(String startTime) throws CamelException {
+        this.startTime = convertDateTime(startTime);
     }
 
     public String getEndTime() {
-        return endTime;
+        return endTime.toString();
     }
 
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
+    public void setEndTime(String endTime) throws CamelException {
+        this.endTime = convertDateTime(endTime);
     }
 
     @Override
