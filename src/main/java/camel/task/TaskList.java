@@ -12,6 +12,18 @@ public class TaskList {
         tasks = new ArrayList<>();
     }
 
+    public int getSize() {
+        return tasks.size();
+    }
+
+    public boolean isEmpty() {
+        return tasks.isEmpty();
+    }
+
+    public void addTask(Task task) {
+        tasks.add(task);
+    }
+
     public Task addTodo(String description, boolean isDone) {
         Todo newTodo = new Todo(description, isDone);
         tasks.add(newTodo);
@@ -77,10 +89,6 @@ public class TaskList {
         }
     }
 
-    public int getSize() {
-        return tasks.size();
-    }
-
     public Task getTask(int index) throws CamelException {
         if (tasks.isEmpty()) {
             throw new CamelException(ErrorMessages.EMPTY_TASK_LIST);
@@ -90,6 +98,16 @@ public class TaskList {
         } catch (IndexOutOfBoundsException e) {
             throw new CamelException(ErrorMessages.taskIndexOutOfRange(tasks.size()));
         }
+    }
+
+    public TaskList findTaskByDescription(String description) {
+        TaskList matchingTasks = new TaskList();
+        for (Task task : tasks) {
+            if (task.getDescription().contains(description)) {
+                matchingTasks.addTask(task);
+            }
+        }
+        return matchingTasks;
     }
 
     public ArrayList<String> fileFormat() {
