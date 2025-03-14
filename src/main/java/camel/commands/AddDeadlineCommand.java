@@ -1,5 +1,6 @@
 package camel.commands;
 
+import camel.exception.CamelException;
 import camel.file.Storage;
 import camel.task.Task;
 import camel.task.TaskList;
@@ -15,7 +16,7 @@ public class AddDeadlineCommand extends AddTaskCommand {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui userInterface, Storage storage) {
+    public void execute(TaskList tasks, Ui userInterface, Storage storage) throws CamelException {
         Task newDeadline = tasks.addDeadline(description, isDone, doneBy);
         printAcknowledgement(userInterface, newDeadline, tasks);
     }
