@@ -1,5 +1,15 @@
 # Camel User Guide
 
+## Quick Start
+
+1. Ensure you have Java 17 installed.
+
+2. Copy the JAR file to a folder that you want to use.
+
+3. In a command terminal, `cd` into the folder, and run `java -jar ip.jar` to start the program.
+
+## Features
+
 ![Camel_Screenshot.png](Camel_Screenshot.png)
 
 Hello! I am Camel :), a smart todo list helping you to manage your ever-growing list of todos, deadlines and 
