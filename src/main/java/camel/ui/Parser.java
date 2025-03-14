@@ -3,8 +3,6 @@ package camel.ui;
 import camel.commands.*;
 import camel.exception.CamelException;
 import camel.messages.ErrorMessages;
-import camel.task.Task;
-import camel.task.TaskList;
 
 public class Parser {
 

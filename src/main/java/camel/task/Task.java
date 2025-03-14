@@ -45,8 +45,8 @@ public class Task {
         if (splitInputs.length != 2) {
             throw new DateTimeException(ErrorMessages.INCORRECT_DATE_TIME_INPUT);
         }
-        String date = "";
-        String time = "";
+        String date;
+        String time;
 
         if (splitInputs[0].length() > splitInputs[1].length()) { //date-time format
             date = formatDate(splitInputs[0]);
@@ -106,6 +106,6 @@ public class Task {
     }
 
     public String toFileFormat() {
-        return Boolean.toString(isDone) + "," + description;
+        return isDone + "," + description;
     }
 }
