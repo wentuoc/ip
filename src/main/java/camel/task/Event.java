@@ -1,38 +1,42 @@
 package camel.task;
 
-public class Event extends Task {
-    private String startTime;
-    private String endTime;
+import camel.exception.CamelException;
 
-    public Event(String description, boolean isDone, String startTime, String endTime) {
+import java.time.LocalDateTime;
+
+public class Event extends Task {
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
+
+    public Event(String description, boolean isDone, String startTime, String endTime) throws CamelException {
         super(description, isDone);
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.startTime = convertDateTime(startTime);
+        this.endTime = convertDateTime(endTime);
     }
 
     public String getStartTime() {
-        return startTime;
+        return printDateTime(startTime);
     }
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
+    public void setStartTime(String startTime) throws CamelException {
+        this.startTime = convertDateTime(startTime);
     }
 
     public String getEndTime() {
-        return endTime;
+        return printDateTime(endTime);
     }
 
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
+    public void setEndTime(String endTime) throws CamelException {
+        this.endTime = convertDateTime(endTime);
     }
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + startTime + " to: " + endTime + ")";
+        return "[E]" + super.toString() + " (from: " + getStartTime() + " to: " + getEndTime() + ")";
     }
 
     @Override
     public String toFileFormat() {
-        return "E," + super.toFileFormat() + "," + startTime + "," + endTime;
+        return "E," + super.toFileFormat() + "," + getStartTime() + "," + getEndTime();
     }
 }

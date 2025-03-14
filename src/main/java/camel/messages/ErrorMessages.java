@@ -49,4 +49,7 @@ public class ErrorMessages {
     public static String saveFileFailed(String line) {
         return "\tSave file failed: " + line;
     }
+
+    public static final String INCORRECT_DATE_TIME_INPUT = "I don't understand :( Please ensure your date time is in " +
+            "this format: \"yyyy-mm-dd hh:mm\"";
 }

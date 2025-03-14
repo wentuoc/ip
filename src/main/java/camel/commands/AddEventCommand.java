@@ -1,5 +1,6 @@
 package camel.commands;
 
+import camel.exception.CamelException;
 import camel.file.Storage;
 import camel.task.Task;
 import camel.task.TaskList;
@@ -17,7 +18,7 @@ public class AddEventCommand extends AddTaskCommand {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui userInterface, Storage storage) {
+    public void execute(TaskList tasks, Ui userInterface, Storage storage) throws CamelException {
         Task newEvent = tasks.addEvent(description, isDone, startTime, endTime);
         printAcknowledgement(userInterface, newEvent, tasks);
     }
