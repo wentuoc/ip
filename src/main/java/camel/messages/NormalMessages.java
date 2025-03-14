@@ -15,7 +15,7 @@ public class NormalMessages {
             LINE_BREAK;
 
     public static final String HELP = LINE_BREAK + "\n\tAvailable commands: {todo, deadline, event, list, mark, " +
-            "unmark, bye, help}\n" + LINE_BREAK;
+            "unmark, delete, find, bye, help}\n" + LINE_BREAK;
 
     public static String addedTask(Task currentTask, int numberOfTasks) {
         return LINE_BREAK + "\n\tCamel has added this task :)\n\t" + currentTask + "\n\tYou now have " +
