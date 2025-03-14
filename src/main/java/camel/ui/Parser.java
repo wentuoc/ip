@@ -4,6 +4,9 @@ import camel.commands.*;
 import camel.exception.CamelException;
 import camel.messages.ErrorMessages;
 
+/**
+ * Parses the user's inputs and fetches the corresponding Command class
+ */
 public class Parser {
 
     private final int LENGTH_OF_BY = 4;
@@ -30,10 +33,10 @@ public class Parser {
 
     /**
      * Parses the input string and splits it into the command and arguments.
-     * Returns the corresponding Command class.
+     * Returns the corresponding Command object.
      *
      * @param input Input from user.
-     * @return Corresponding Command class.
+     * @return Corresponding Command object.
      * @throws CamelException If an unknown command or an incorrect number of arguments is supplied.
      */
     public AbstractCommand parseInput(String input) throws CamelException {

@@ -33,7 +33,7 @@ public class Task {
 
     /**
      * Converts a date time input represented as a String in {@code yyyy-mm-dd hh:mm} format into a LocalDateTime
-     * object. If the input provided was of a non-standard format, this function attempts to parse it and convert it
+     * object. If the input provided is of a non-standard format, this function attempts to parse it and convert it
      * into the standard date time format.
      *
      * @param input The date time input as a String.

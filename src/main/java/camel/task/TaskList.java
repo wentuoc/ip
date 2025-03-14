@@ -5,6 +5,9 @@ import camel.messages.ErrorMessages;
 
 import java.util.ArrayList;
 
+/**
+ * Represents of a list of tasks. Contains methods to access and modify the list.
+ */
 public class TaskList {
     private final ArrayList<Task> tasks;
 
@@ -21,7 +24,7 @@ public class TaskList {
     }
 
     /**
-     * Adds a new task object directly into the TaskList.
+     * Adds a new Task object directly into the TaskList.
      *
      * @param task The Task object to be added.
      */
@@ -59,7 +62,7 @@ public class TaskList {
     }
 
     /**
-     * Adds a new Event object into the TaskList by specifying its {@code description}, {@code isDone}, and
+     * Adds a new Event object into the TaskList by specifying its {@code description}, {@code isDone},
      * {@code startTime} and {@code endTime}.
      *
      * @param description The description of the Event.
@@ -179,7 +182,7 @@ public class TaskList {
 
     /**
      * Formats the TaskList into an ArrayList containing all attributes of a Task separated by commas,
-     * in preparation for writing into memory.
+     * for writing into memory.
      */
     public ArrayList<String> fileFormat() {
         ArrayList<String> lines = new ArrayList<>();
