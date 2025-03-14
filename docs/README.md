@@ -51,7 +51,7 @@ Example: `deadline CS2113 iP /by 2025-03-14 23:59`
 
 *Not to worry if you cannot remember the syntax!* If you type it wrongly, Camel will remind you!
 
-`>>> deadline argh`
+Example `deadline argh`
 ```
     I don't understand :( Please ensure the format is as follows: "deadline <name> /by <time>"
 ```
@@ -92,7 +92,7 @@ Example `mark 1`
 
 The `[X]` indicates that your task is done!
 
-*(Note: the `[T]` indicates the type of task, whether it's a* `[T]`odo, `[D]`eadline, or `[E]`vent)
+*(Note: the `[T]` indicates the type of task, whether it's a* `[T]`Todo, `[D]`Deadline, or `[E]`Event)
 
 ## Unmarking Tasks
 
