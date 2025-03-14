@@ -6,11 +6,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-import camel.commands.AbstractCommand;
 import camel.exception.CamelException;
 import camel.messages.ErrorMessages;
 import camel.task.TaskList;
 
+/**
+ * Represents a file manager that can read, write and save data to disk.
+ */
 public class Storage {
 
     private final String address;
@@ -21,6 +23,11 @@ public class Storage {
         this.address = address;
     }
 
+    /**
+     * Opens a file based on the {@code address} as provided during the initialisation of this object. If the
+     * directory to the file does not exist, the directory and file is created. If the file already exists, then data
+     * from the file is read, parsed, and added into the TaskList {@code tasks}.
+     */
     public void openFile() {
         Path dataPath = Paths.get(address);
 
@@ -62,6 +69,9 @@ public class Storage {
         }
     }
 
+    /**
+     * Writes the formatted data from the TaskList into the file at {@code address}.
+     */
     public void saveFile() {
         Path dataPath = Paths.get(address);
         try {

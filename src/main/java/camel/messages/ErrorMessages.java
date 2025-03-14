@@ -1,5 +1,8 @@
 package camel.messages;
 
+/**
+* Contains all the error messages that can be entered into {@code CamelException}.
+ */
 public class ErrorMessages {
     public static final String TODO_FORMAT = "I don't understand :( Please ensure the format is as follows: " +
             "\"todo <name>\"";

@@ -7,6 +7,9 @@ import camel.task.TaskList;
 
 import java.util.Scanner;
 
+/**
+ * Represents the user interface. It fetches inputs from the user and prints messages to the console.
+ */
 public class Ui {
 
     private Scanner in = new Scanner(System.in);

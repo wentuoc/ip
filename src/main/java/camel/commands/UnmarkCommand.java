@@ -12,6 +12,13 @@ public class UnmarkCommand extends ModifyCommand {
         super(index);
     }
 
+    /**
+     * Marks a task of a specified index from TaskList {@code tasks} as not done.
+     * @param tasks The TaskList to unmark the task from.
+     * @param userInterface The UI object that prints the acknowledgement message.
+     * @param storage Not used
+     * @throws CamelException If an exception occurred when unmarking the object.
+     */
     @Override
     public void execute(TaskList tasks, Ui userInterface, Storage storage) throws CamelException {
         Task currentTask = tasks.unmarkTask(index);

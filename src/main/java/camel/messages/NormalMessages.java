@@ -2,6 +2,9 @@ package camel.messages;
 
 import camel.task.Task;
 
+/**
+ * Contains static String messages and functions that can be printed.
+ */
 public class NormalMessages {
     public static final String LINE_BREAK = "    ____________________________________________________________";
 

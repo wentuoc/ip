@@ -17,6 +17,13 @@ public class AddEventCommand extends AddTaskCommand {
         this.endTime = endTime;
     }
 
+    /**
+     * Adds a new Event object into TaskList {@code tasks}.
+     * @param tasks The TaskList to add the Event object into.
+     * @param userInterface The UI object that prints the acknowledgement message.
+     * @param storage Not used
+     * @throws CamelException If an exception occurred when creating a new Event object.
+     */
     @Override
     public void execute(TaskList tasks, Ui userInterface, Storage storage) throws CamelException {
         Task newEvent = tasks.addEvent(description, isDone, startTime, endTime);
