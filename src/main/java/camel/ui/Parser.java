@@ -84,6 +84,11 @@ public class Parser {
             } catch (NumberFormatException e) {
                 throw new CamelException(ErrorMessages.DELETE_FORMAT);
             }
+        case "find":
+            if (item.isEmpty()) {
+                throw new CamelException(ErrorMessages.FIND_FORMAT);
+            }
+            return new FindCommand(item);
         case "help":
             return new HelpCommand();
         case "bye":

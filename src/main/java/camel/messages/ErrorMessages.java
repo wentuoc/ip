@@ -19,6 +19,11 @@ public class ErrorMessages {
     public static final String DELETE_FORMAT = "I don't understand :( Please ensure the format is as follows: " +
             "\"delete <task index>\"";
 
+    public static final String FIND_FORMAT = "I don't understand :( Please ensure the format is as follows: " +
+            "\"find <search term>\"";
+
+    public static final String SEARCH_TERM_NOT_FOUND = "I could not find any task matching that term :(";
+
     public static String taskIndexOutOfRange(int numberOfTasks) {
         return String.format("Task index is out of range :( Please select within 1 and %d only", numberOfTasks);
     }
