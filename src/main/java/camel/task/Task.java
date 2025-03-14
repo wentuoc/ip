@@ -1,6 +1,7 @@
 package camel.task;
 
 import camel.exception.CamelException;
+import camel.messages.ErrorMessages;
 
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
@@ -31,14 +32,14 @@ public class Task {
             String formattedDateTime = formatDateTime(input);
             return LocalDateTime.parse(formattedDateTime);
         } catch (DateTimeException e) {
-            throw new CamelException(e.getMessage());
+            throw new CamelException(ErrorMessages.INCORRECT_DATE_TIME_INPUT);
         }
     }
 
     private String formatDateTime(String input) throws DateTimeException {
         String[] splitInputs = input.split(" ");
         if (splitInputs.length != 2) {
-            throw new DateTimeException("");
+            throw new DateTimeException(ErrorMessages.INCORRECT_DATE_TIME_INPUT);
         }
         String date = "";
         String time = "";
@@ -66,10 +67,10 @@ public class Task {
         }
         String[] splitInputs = input.split("-");
         if (splitInputs.length != 3) {
-            throw new DateTimeException(""); //add an error message
+            throw new DateTimeException(ErrorMessages.INCORRECT_DATE_TIME_INPUT);
         }
-        if (splitInputs[0].length() == 4) { //yyyy-mm-dddd format
-            return input; //can do some reformattin
+        if (splitInputs[0].length() == 4) { //yyyy-mm-dd format
+            return input;
         } else if (splitInputs[0].length() == 2 && splitInputs[2].length() == 4) { //dd-mm-yyyy format
             return splitInputs[2] + "-" + splitInputs[1] + "-" + splitInputs[0];
         } else if (splitInputs[0].length() == 1) { //d-m-yyyy format
@@ -82,8 +83,13 @@ public class Task {
             }
             return splitInputs[2] + "-" + splitInputs[1] + "-" + splitInputs[0];
         } else {
-            throw new DateTimeException(""); //add an error message
+            throw new DateTimeException(ErrorMessages.INCORRECT_DATE_TIME_INPUT);
         }
+    }
+
+    protected String printDateTime(LocalDateTime dateTime) {
+        String dateTimeInString = dateTime.toString();
+        return dateTimeInString.replace("T"," ");
     }
 
     @Override

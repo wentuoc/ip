@@ -15,7 +15,7 @@ public class Event extends Task {
     }
 
     public String getStartTime() {
-        return startTime.toString();
+        return printDateTime(startTime);
     }
 
     public void setStartTime(String startTime) throws CamelException {
@@ -23,7 +23,7 @@ public class Event extends Task {
     }
 
     public String getEndTime() {
-        return endTime.toString();
+        return printDateTime(endTime);
     }
 
     public void setEndTime(String endTime) throws CamelException {
@@ -32,11 +32,11 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + startTime + " to: " + endTime + ")";
+        return "[E]" + super.toString() + " (from: " + getStartTime() + " to: " + getEndTime() + ")";
     }
 
     @Override
     public String toFileFormat() {
-        return "E," + super.toFileFormat() + "," + startTime + "," + endTime;
+        return "E," + super.toFileFormat() + "," + getStartTime() + "," + getEndTime();
     }
 }

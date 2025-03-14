@@ -13,7 +13,7 @@ public class Deadline extends Task {
     }
 
     public String getDoneBy() {
-        return doneBy.toString();
+        return printDateTime(doneBy);
     }
 
     public void setDoneBy(String doneBy) throws CamelException {
@@ -22,11 +22,11 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + doneBy + ")";
+        return "[D]" + super.toString() + " (by: " + getDoneBy() + ")";
     }
 
     @Override
     public String toFileFormat() {
-        return "D," + super.toFileFormat() + "," + doneBy;
+        return "D," + super.toFileFormat() + "," + getDoneBy();
     }
 }
