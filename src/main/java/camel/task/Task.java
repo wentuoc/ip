@@ -31,6 +31,15 @@ public class Task {
         isDone = false;
     }
 
+    /**
+     * Converts a date time input represented as a String in {@code yyyy-mm-dd hh:mm} format into a LocalDateTime
+     * object. If the input provided was of a non-standard format, this function attempts to parse it and convert it
+     * into the standard date time format.
+     *
+     * @param input The date time input as a String.
+     * @return The date time as a LocalDateTime object
+     * @throws CamelException If an error was encountered when parsing the input, such as if it was of a wrong format.
+     */
     protected LocalDateTime convertDateTime(String input) throws CamelException {
         try {
             String formattedDateTime = formatDateTime(input);

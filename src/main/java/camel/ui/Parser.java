@@ -28,6 +28,14 @@ public class Parser {
         return new String[]{description, fromDate, toDate};
     }
 
+    /**
+     * Parses the input string and splits it into the command and arguments.
+     * Returns the corresponding Command class.
+     *
+     * @param input Input from user.
+     * @return Corresponding Command class.
+     * @throws CamelException If an unknown command or an incorrect number of arguments is supplied.
+     */
     public AbstractCommand parseInput(String input) throws CamelException {
         String cmd = input;
         String item = "";
